@@ -6,10 +6,7 @@ namespace Web_API_Project.Repositories
 {
     public class UserRepository(AppDbContext context) : IUserRepository
     {
-
         private readonly AppDbContext _context=context;
-
-       
 
         public async Task AddAsync(User user)
         {

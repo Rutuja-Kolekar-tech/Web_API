@@ -20,6 +20,27 @@ namespace Web_API_Project.Controllers
                 message = "User registered successfully"
             });
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto dto)
+        {
+           var isValid =  await _authService.LoginAsync(dto);
+            if (!isValid)
+            {
+                return Unauthorized(new
+                {
+                    Message = "Invalid email or password"
+                });
+            }
+            else
+            {
+                return Ok(new
+                {
+
+                    Message = "Login successfull"
+
+                });
+            }
+        }
     }
 
 }

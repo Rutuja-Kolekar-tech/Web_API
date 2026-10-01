@@ -30,5 +30,20 @@ namespace Web_API_Project.Services
             await _userRepository.AddAsync(user);
             await _userRepository.SaveChangesAsync();
         }
+
+        public async Task<bool> LoginAsync(LoginDto dto)
+        {
+            var user = await _userRepository.GetByEmailAsync(dto.Email);
+            if (user == null)
+            {
+                return false;
+            }
+            if (user.PasswordHash != dto.Password)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
