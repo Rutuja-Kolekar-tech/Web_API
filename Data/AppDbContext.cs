@@ -7,5 +7,6 @@ namespace Web_API_Project.Data
     {
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

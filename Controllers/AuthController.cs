@@ -8,9 +8,8 @@ namespace Web_API_Project.Controllers
     [Route("api/[controller]")]
     public class AuthController(IAuthService authService) : ControllerBase
     {
-        private readonly IAuthService _authService= authService;
+        private readonly IAuthService _authService = authService;
         
-       
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequestDto dto)
         {
@@ -41,7 +40,18 @@ namespace Web_API_Project.Controllers
                 });
             }
         }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            return Ok(new
+            {
+                Message= "Logout successful."
+            });
+        }
     }
+
+
 
 }
     

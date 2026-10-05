@@ -25,6 +25,8 @@ namespace Web_API_Project
 
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
             //Learn more about configuring Swagger / OpenAPI at https://aka.ms/aspnetcore/swashbuckle
