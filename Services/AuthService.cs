@@ -23,7 +23,7 @@ namespace Web_API_Project.Services
             {
                 Username =dto.Username,
                 Email= dto.Email,
-                PasswordHash=dto.Password,
+                PasswordHash= HashPassword(dto.Password),
                 CreatedOn=DateTime.UtcNow
             };
 
@@ -31,19 +31,30 @@ namespace Web_API_Project.Services
             await _userRepository.SaveChangesAsync();
         }
 
-        public async Task<bool> LoginAsync(LoginDto dto)
+        public async Task<User> LoginAsync(LoginDto dto)
         {
             var user = await _userRepository.GetByEmailAsync(dto.Email);
             if (user == null)
             {
-                return false;
+                return null;
             }
-            if (user.PasswordHash != dto.Password)
+            var verifiedPassword = VerifyPassword(dto.Password, user.PasswordHash);
+
+            if (!verifiedPassword)
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return user;
+        }
+        public string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        public bool VerifyPassword(string password, string hash)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hash);
         }
     }
 }
